@@ -19,19 +19,19 @@ var config = {
 exports.sendMail = functions.database.ref('/messages/{pushId}/email')
   .onCreate(event => {
     // create reusable transporter object using the default SMTP transport
-    let transporter = nodemailer.createTransport("SMTP",{
-        service: 'Gmail',
-
-        secure: false, // true for 465, false for other ports
+    let transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+        port: 465,
+        secure: true, // true for 465, false for other ports
         auth: {
-            user: "padinju@gmail", // generated ethereal user
+            user: "padinju@gmail.com", // generated ethereal user
             pass: "albinantony"  // generated ethereal password
         }
     });
 
     // setup email data with unicode symbols
     let mailOptions = {
-        from: '"Fred Foo 👻" <foo@blurdybloop.com>', // sender address
+        from: '"albin" <padinju@gmail.com>', // sender address
         to: 'padinju@gmail.com, abhisheknikunjam@gmail.com', // list of receivers
         subject: 'Hello ✔', // Subject line
         text: 'Hello world?', // plain text body
