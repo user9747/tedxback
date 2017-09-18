@@ -31,26 +31,26 @@ jQuery(document).ready(function ($) {
    $(document).ready(function(){
 		 var blurVal='blur(5px)';
     $("#collapser").on('click', function(){
-		
+
         $(this).toggleClass("open");
 		$(".sections").css('filter',blurVal);
 		if(blurVal!='blur(0px)'){blurVal='blur(0px)';}
 		else{blurVal='blur(5px)';}
         });
         });
-	
-	
-	
-	
+
+
+
+
 	/*---------------------------------------------*
      * Menu Background Change
      ---------------------------------------------*/
-	
+
 	var windowWidth = $(window).width();
     if (windowWidth > 757) {
         $(window).scroll( {
         previousTop: 0
-               }, 
+               },
     function () {
     var currentTop = $(window).scrollTop();
     if (currentTop < this.previousTop) {
@@ -60,23 +60,23 @@ jQuery(document).ready(function ($) {
 			    $(".navbar").fadeOut(500);
 		     }
     this.previousTop = currentTop;
-		    
-		    
-		    
-		    
-		    
-		    
+
+
+
+
+
+
 		    /*function () {
                 if ($(this).scrollTop() > 400) {
                     $('.navbar').fadeIn(400);
                     $('.navbar').addClass('menu-bg');
 
                 } else {
-                    
+
                     $('.navbar').removeClass('menu-bg');
                 }*/
             });
-        
+
     }
 	$('#bs-example-navbar-collapse-1').localScroll();
 
@@ -89,7 +89,7 @@ jQuery(document).ready(function ($) {
 
 
 
-   
+
 });
 
 
@@ -105,3 +105,78 @@ $(".at").click(function () {
             if ($("#collapser").css('display')!='none')
             $("#collapser").click();
         });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//FIREBASE//
+
+
+ var config = {
+    apiKey: "AIzaSyDvq3utO3-0lLsQgwveVAiysCRW16DQ7nM",
+    authDomain: "tedxnode.firebaseapp.com",
+    databaseURL: "https://tedxnode.firebaseio.com",
+    projectId: "tedxnode",
+    storageBucket: "tedxnode.appspot.com",
+    messagingSenderId: "114370004312"
+  };
+  firebase.initializeApp(config);
+
+
+// Reference messages collection
+var messagesRef = firebase.database().ref('messages');
+
+// Listen for form submit
+document.getElementById('contactForm').addEventListener('submit', submitForm);
+
+// Submit form
+function submitForm(e){
+  e.preventDefault();
+
+  // Get values
+  var name = getInputVal('name');
+  var company = getInputVal('company');
+  var email = getInputVal('email');
+  var phone = getInputVal('phone');
+
+
+  // Save message
+  saveMessage(name, company, email, phone);
+
+
+
+  // Clear form
+  document.getElementById('contactForm').reset();
+}
+
+// Function to get get form values
+function getInputVal(id){
+  return document.getElementById(id).value;
+}
+
+// Save message to firebase
+function saveMessage(name, company, email, phone){
+  var newMessageRef = messagesRef.push();
+  newMessageRef.set({
+    name: name,
+    company:company,
+    email:email,
+    phone:phone,
+
+  });
+}
